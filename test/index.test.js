@@ -63,6 +63,7 @@ describe("integration tests", function() {
         shell(`
             npm config get prefix
             npm install -g @adobe/aio-cli
+            dir ${path.resolve(process.env.npm_config_prefix, "bin")}
             aio update --no-confirm
         `);
 
