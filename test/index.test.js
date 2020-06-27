@@ -68,16 +68,20 @@ describe("integration tests", function() {
 
         cd("project");
 
-        // TODO: get default -y selection to include asset compute worker OR interactive input
+        // HACK: since `aio app init` has no way to programmatically select from the different questions,
+        //       we have to simulate user input using echo and piping to stdin, which is different between windows & *nix
+        if (os.platform() === "win32") {
+            // this line must be exactly like this, including spaces or missing spaces (echo in windows CMD is tricky)
+            shell(`
+                echo.>newline& (timeout 5 >nul & echo a & timeout 2 >nul & echo aa & timeout 2 >nul & type newline) | aio app init --no-login --asset-compute -i ..\\..\\test\\console.json
+            `);
+        } else {
+            shell(`
+                (sleep 2; echo "a "; sleep 2; echo "aa "; sleep 2; echo) | aio app init --no-login --asset-compute -i ../../test/console.json
+            `);
+        }
 
-        shell(`
-            aio app init --no-login -y --asset-compute -i ../../test/console.json
-        `);
-
-        assert(fs.existsSync(path.join("actions", "generic", "index.js")));
-
-        // TODO: validate asset compute worker created once available
-        // assert(fs.existsSync(path.join("actions", "worker", "index.js")));
+        assert(fs.existsSync(path.join("actions", "worker", "index.js")));
 
         shell(`
             aio app test
