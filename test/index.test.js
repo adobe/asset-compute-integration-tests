@@ -15,17 +15,19 @@
 const assert = require("assert");
 const { execSync } = require("child_process");
 const fs = require("fs");
+const os = require("os");
 const path = require("path");
 const rimraf = require("rimraf");
 
-function shell(command, dir) {
-    command = command
+function shell(cmd, dir) {
+    cmd = cmd
         .split("\n")
         .map(line => line.trim())
         .filter(line => line.length > 0)
         .filter(line => !line.startsWith("#"))
-        .join(";");
-    execSync(command, {cwd: dir, stdio: 'inherit'});
+        .join(os.platform() === "win32" ? "&" : ";");
+
+    execSync(cmd, {cwd: dir, stdio: 'inherit'});
 }
 
 // create dir (if doesn't exist yet) and change into it
