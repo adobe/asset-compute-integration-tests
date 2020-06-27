@@ -27,7 +27,7 @@ function shell(cmd, dir) {
         .filter(line => !line.startsWith("#"))
         .join(os.platform() === "win32" ? " & " : "; ");
 
-    execSync(cmd, {cwd: dir, stdio: 'inherit', shell: true});
+    execSync(cmd, {cwd: dir, stdio: 'inherit'});
 }
 
 // create dir (if doesn't exist yet) and change into it
@@ -48,7 +48,7 @@ describe("integration tests", function() {
         // make npm global installations go into a specific directory
         // to avoid messing with a user's actual global npm installations
         process.env.NPM_CONFIG_PREFIX=`${BUILD_DIR}/npm`;
-        process.env.PATH=`${process.env.NPM_CONFIG_PREFIX}/bin:${process.env.PATH}`;
+        process.env.PATH=`${process.env.NPM_CONFIG_PREFIX}/bin${path.delimiter}${process.env.PATH}`;
 
         // reset/clear build dir entirely before each run
         rimraf.sync(BUILD_DIR);
