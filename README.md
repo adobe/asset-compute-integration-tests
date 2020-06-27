@@ -1,5 +1,5 @@
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
-[![Travis](https://travis-ci.com/adobe/<package-name>.svg?branch=master)](https://travis-ci.com/adobe/<package-name>)
+[![Travis](https://api.travis-ci.com/adobe/asset-compute-integration-tests.svg)](https://travis-ci.com/adobe/asset-compute-integration-tests)
 
 Adobe Asset Compute Integration Tests
 ======================================
