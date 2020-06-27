@@ -85,8 +85,10 @@ describe("integration tests", function() {
 
         assert(fs.existsSync(path.join("actions", "worker", "index.js")));
 
-        // travis windows docker does not support linux containers
-        if (!process.env.TRAVIS || os.platform() !== "win32") {
+        if (process.env.TRAVIS && os.platform() === "win32") {
+            console.log("SKIPPING aio app test on Travis Windows (docker linux containers required for worker tests not supported)");
+
+        } else {
             shell(`
                 aio app test
             `);
