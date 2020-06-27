@@ -25,7 +25,7 @@ function shell(cmd, dir) {
         .map(line => line.trim())
         .filter(line => line.length > 0)
         .filter(line => !line.startsWith("#"))
-        .join(os.platform() === "win32" ? "&" : ";");
+        .join(os.platform() === "win32" ? " & " : "; ");
 
     execSync(cmd, {cwd: dir, stdio: 'inherit'});
 }
