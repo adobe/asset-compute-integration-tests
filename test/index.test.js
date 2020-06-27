@@ -85,8 +85,11 @@ describe("integration tests", function() {
 
         assert(fs.existsSync(path.join("actions", "worker", "index.js")));
 
-        shell(`
-            aio app test
-        `);
+        // travis windows docker does not support linux containers
+        if (!process.env.TRAVIS || os.platform() !== "win32") {
+            shell(`
+                aio app test
+            `);
+        }
     }).timeout(300000);
 });
