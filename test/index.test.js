@@ -15,6 +15,6 @@
 describe("integration tests", function() {
 
     it("should install tools and run developer experience", async function() {
-        console.log("TODO implement test");
+        console.log("TODO implement");
     });
 });
