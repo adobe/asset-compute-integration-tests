@@ -47,8 +47,11 @@ describe("integration tests", function() {
 
         // make npm global installations go into a specific directory
         // to avoid messing with a user's actual global npm installations
-        process.env.NPM_CONFIG_PREFIX=`${BUILD_DIR}/npm`;
-        process.env.PATH=`${process.env.NPM_CONFIG_PREFIX}/bin${path.delimiter}${process.env.PATH}`;
+        // Note: npm_config_prefix must be lowercase!
+        process.env.npm_config_prefix = path.resolve(BUILD_DIR, "npm");
+
+        const npmBinPath = path.resolve(process.env.npm_config_prefix, "bin");
+        process.env.PATH = `${npmBinPath}${path.delimiter}${process.env.PATH}`;
 
         // reset/clear build dir entirely before each run
         rimraf.sync(BUILD_DIR);
@@ -58,6 +61,7 @@ describe("integration tests", function() {
 
     it("should install tools and run developer experience", async function() {
         shell(`
+            npm config get prefix
             npm install -g @adobe/aio-cli
             aio update --no-confirm
         `);
