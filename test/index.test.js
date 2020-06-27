@@ -71,9 +71,10 @@ describe("integration tests", function() {
         // HACK: since `aio app init` has no way to programmatically select from the different questions,
         //       we have to simulate user input using echo and piping to stdin, which is different between windows & *nix
         if (os.platform() === "win32") {
+            const timeout = "%SystemRoot%\\System32\\timeout.exe";
             // this line must be exactly like this, including spaces or missing spaces (echo in windows CMD is tricky)
             shell(`
-                echo.>newline& (timeout /t 5 >nul & echo a & timeout /t 2 >nul & echo aa & timeout /t 2 >nul & type newline) | aio app init --no-login --asset-compute -i ..\\..\\test\\console.json
+                echo.>newline& (${timeout} 5 >nul & echo a & ${timeout} 2 >nul & echo aa & ${timeout} 2 >nul & type newline) | aio app init --no-login --asset-compute -i ..\\..\\test\\console.json
             `);
         } else {
             shell(`
