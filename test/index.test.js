@@ -73,7 +73,7 @@ describe("integration tests", function() {
         if (os.platform() === "win32") {
             // this line must be exactly like this, including spaces or missing spaces (echo in windows CMD is tricky)
             shell(`
-                echo.>newline& (timeout 5 >nul & echo a & timeout 2 >nul & echo aa & timeout 2 >nul & type newline) | aio app init --no-login --asset-compute -i ..\\..\\test\\console.json
+                echo.>newline& (timeout /t 5 >nul & echo a & timeout /t 2 >nul & echo aa & timeout /t 2 >nul & type newline) | aio app init --no-login --asset-compute -i ..\\..\\test\\console.json
             `);
         } else {
             shell(`
