@@ -1,0 +1,61 @@
+{
+  "project": {
+    "id": "100000",
+    "name": "myproject",
+    "title": "My Project",
+    "org": {
+      "id": "100000",
+      "name": "ORG_NAME",
+      "ims_org_id": "ORG_ID@Adobe"
+    },
+    "workspace": {
+      "id": "100000",
+      "name": "Stage",
+      "title": "Stage",
+      "action_url": "https://100000-myproject-stage.adobeioruntime.net",
+      "app_url": "https://100000-myproject-stage.adobestatic.net",
+      "details": {
+        "credentials": [
+          {
+            "id": "10000",
+            "name": "Project xxxxxxxx",
+            "integration_type": "service",
+            "jwt": {
+              "client_id": "CLIENT_ID",
+              "client_secret": "SECRET",
+              "technical_account_email": "invalid@adobe.com",
+              "technical_account_id": "invalid@adobe.com",
+              "meta_scopes": [
+                "asset_compute_meta",
+                "ent_adobeio_sdk",
+                "event_receiver_api"
+              ]
+            }
+          }
+        ],
+        "services": [
+          {
+            "code": "AdobeIOManagementAPISDK",
+            "name": "I/O Management API"
+          },
+          {
+            "code": "AssetComputeSDK",
+            "name": "Asset Compute"
+          },
+          {
+            "code": "CloudIntegrationSDK",
+            "name": "I/O Events"
+          }
+        ],
+        "runtime": {
+          "namespaces": [
+            {
+              "name": "NAMESPACE",
+              "auth": "AUTH"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
