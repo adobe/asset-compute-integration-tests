@@ -50,6 +50,7 @@ describe("integration tests", function() {
         // Note: npm_config_prefix must be lowercase!
         process.env.npm_config_prefix = path.resolve(BUILD_DIR, "npm");
 
+        // npm bin path is different on windows, ask npm for the exact path
         const npmBinPath = execSync("npm bin -g").toString().trim();
         process.env.PATH = `${npmBinPath}${path.delimiter}${process.env.PATH}`;
 
@@ -61,9 +62,7 @@ describe("integration tests", function() {
 
     it("should install tools and run developer experience", async function() {
         shell(`
-            npm config get prefix
             npm install -g @adobe/aio-cli
-            npm bin -g
             aio update --no-confirm
         `);
 
