@@ -40,7 +40,7 @@ function cd(dir) {
 
 describe("integration tests", function() {
 
-    const BUILD_DIR = path.resolve("build"); // absolute paths required beloow
+    const BUILD_DIR = path.resolve("build"); // absolute paths required below
 
     beforeEach(function() {
         this.timeout(30000);
@@ -86,7 +86,7 @@ describe("integration tests", function() {
         assert(fs.existsSync(path.join("actions", "worker", "index.js")));
 
         if (process.env.TRAVIS && os.platform() === "win32") {
-            console.log("SKIPPING aio app test on Travis Windows (docker linux containers required for worker tests not supported)");
+            console.log("SKIPPING aio app test on Travis Windows (docker linux containers required for worker tests)");
 
         } else {
             shell(`
