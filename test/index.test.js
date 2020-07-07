@@ -12,9 +12,86 @@
 
 'use strict';
 
+const assert = require("assert");
+const { execSync } = require("child_process");
+const fs = require("fs");
+const os = require("os");
+const path = require("path");
+const rimraf = require("rimraf");
+
+function shell(cmd, dir) {
+    cmd = cmd
+        .split("\n")
+        .map(line => line.trim())
+        .filter(line => line.length > 0)
+        .filter(line => !line.startsWith("#"))
+        .join(os.platform() === "win32" ? " & " : "; ");
+
+    execSync(cmd, {cwd: dir, stdio: 'inherit'});
+}
+
+// create dir (if doesn't exist yet) and change into it
+function cd(dir) {
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+    }
+    process.chdir(dir);
+}
+
 describe("integration tests", function() {
 
-    it("should install tools and run developer experience", async function() {
-        console.log("TODO implement");
+    const BUILD_DIR = path.resolve("build"); // absolute paths required below
+
+    beforeEach(function() {
+        this.timeout(30000);
+
+        // make npm global installations go into a specific directory
+        // to avoid messing with a user's actual global npm installations
+        // Note: npm_config_prefix must be lowercase!
+        process.env.npm_config_prefix = path.resolve(BUILD_DIR, "npm");
+
+        // npm bin path is different on windows, ask npm for the exact path
+        const npmBinPath = execSync("npm bin -g").toString().trim();
+        process.env.PATH = `${npmBinPath}${path.delimiter}${process.env.PATH}`;
+
+        // reset/clear build dir entirely before each run
+        rimraf.sync(BUILD_DIR);
+
+        cd(BUILD_DIR);
     });
+
+    it("should install tools and run developer experience", async function() {
+        shell(`
+            npm install -g @adobe/aio-cli
+            aio update --no-confirm
+        `);
+
+        cd("project");
+
+        // HACK: since `aio app init` has no way to programmatically select from the different questions,
+        //       we have to simulate user input using echo and piping to stdin, which is different between windows & *nix
+        if (os.platform() === "win32") {
+            // const timeout = "%SystemRoot%\\System32\\timeout.exe";
+            const wait = "ping -n 5 127.0.0.1 >NUL";
+            // this line must be exactly like this, including spaces or missing spaces (echo in windows CMD is tricky)
+            shell(`
+                echo.>newline& (${wait} & echo a & ${wait} & echo aa & ${wait} & type newline) | aio app init --no-login --asset-compute -i ..\\..\\test\\console.json
+            `);
+        } else {
+            shell(`
+                (sleep 2; echo "a "; sleep 2; echo "aa "; sleep 2; echo) | aio app init --no-login --asset-compute -i ../../test/console.json
+            `);
+        }
+
+        assert(fs.existsSync(path.join("actions", "worker", "index.js")));
+
+        if (process.env.TRAVIS && os.platform() === "win32") {
+            console.log("SKIPPING aio app test on Travis Windows (docker linux containers required for worker tests)");
+
+        } else {
+            shell(`
+                aio app test
+            `);
+        }
+    }).timeout(600000);
 });
