@@ -93,5 +93,5 @@ describe("integration tests", function() {
                 aio app test
             `);
         }
-    }).timeout(300000);
+    }).timeout(600000);
 });
