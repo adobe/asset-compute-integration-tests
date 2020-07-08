@@ -6,6 +6,8 @@ Adobe Asset Compute Integration Tests
 
 Integration tests for the Asset Compute Developer Experience.
 
+These run daily via Travis CI cron jobs to test whether any new Node JS or `aio` versions introduce issues in the developer experience.
+
 ## Contributing
 
 Contributions are welcomed! Read the [Contributing Guide](./.github/CONTRIBUTING.md) for more information.
