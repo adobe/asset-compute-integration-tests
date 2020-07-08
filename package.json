@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/adobe/asset-compute-integration-tests",
   "scripts": {
-    "test": "echo ABORT: Failing on purpose && false",
+    "test": "mocha test",
     "posttest": "eslint ."
   }
 }
