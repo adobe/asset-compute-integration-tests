@@ -35,5 +35,5 @@ notifications:
     on_failure: always
     on_pull_requests: false
     template:
-      - "3rd party developer integration tests %{result}\n\nBuild <%{build_url}|#%{build_number}> (<%{compare_url}|%{commit}>) of <adobe/asset-compute-integration-tests|https://github.com/adobe/asset-compute-integration-tests> in %{duration}"
+      - "3rd party developer integration tests %{result}\n\nBuild <%{build_url}|#%{build_number}> (<%{compare_url}|%{commit}>) of <https://github.com/adobe/asset-compute-integration-tests|adobe/asset-compute-integration-tests> took %{duration}"
 
