@@ -31,7 +31,9 @@ notifications:
     # send notifications for failed regular cron builds (not PRs)
     rooms:
       - secure: UE5RAxjZ6+ehIP1ByYA9GZcNC8kfbkceXDjARRHXvDAo4r6B/ADWT4K1Scqbozh7TO3tOvfgmtJu1t+PI8c5j11wWy3gxyd0fMsycXkb0401YDHt5NHPfGJ+Shijn3N7OEKHuGvFR04SZUYBBw8f7A1dh+apNi846DHTf2fKXrF3dGOIg9yXqz89ze9+X1bnznMgq4f+89UFjZVfTm1DfUZgYy1DrL2AQDPniGhniaT2GXJibj9rNi9s8Kntu16frDGI4+Y4DSWjxFZNlC3y2iVzOLiHH6WvAW1wAYmCOiCZNoQ2yU7ZYU6kNLoNIWVgtNR526uVjYmkSNMSLLWt45DENtnhYosRtfn4A8T+cXWhzxpfBM9Fg+Is/IoFjbr5t6ArCcg84DJTrjElECElMW4bpekX3iF0aFYI74MZGREWAEVpz4DjW/DGlKOjF1WepZNUmYWhAd7ZmwFDAV7s7mwwbsqwdRuCZnHnj8BjaTIxhmAMlIlz41HUBlEeIyn0w7tGYJMM3rnjZpyyoQhAACcYNPQ1bxgHQ07+p9+x39tuhm8u+keIikjV/RPyw3u7FToOqbv9KI6sqcgGjKQDTrzz8vjALm1MR6xWSl7z7agc9DIcjshZJ42YIwt3qp+z81+Uueu8TyPmdq9WTghobheatREu5i0S469yOvtqLqo=
-    on_success: always # switch to "change" after test phase
+    on_success: always
     on_failure: always
     on_pull_requests: false
+    template:
+      - "3rd party developer integration tests %{result}\n\nBuild <%{build_url}|#%{build_number}> (<%{compare_url}|%{commit}>) of <adobe/asset-compute-integration-tests|https://github.com/adobe/asset-compute-integration-tests> in %{duration}"
 
