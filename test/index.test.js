@@ -92,6 +92,12 @@ describe("integration tests", function() {
             shell(`
                 aio app test
             `);
+
+            // test as aio plugin
+            shell(`
+                aio plugins:install @adobe/aio-cli-plugin-asset-compute
+                aio asset-compute test-worker
+            `);
         }
     }).timeout(600000);
 });
