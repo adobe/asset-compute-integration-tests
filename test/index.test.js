@@ -79,7 +79,7 @@ describe("integration tests", function() {
             `);
         } else {
             shell(`
-                (sleep 2; echo "a "; sleep 2; echo "aa "; sleep 2; echo) | aio app init --no-login -i ../../test/console.json
+                (sleep 2; echo "a "; sleep 2; sleep 2; echo) | aio app init --no-login -i ../../test/console.json
             `);
         }
 
