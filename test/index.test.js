@@ -75,7 +75,7 @@ describe("integration tests", function() {
             const wait = "ping -n 5 127.0.0.1 >NUL";
             // this line must be exactly like this, including spaces or missing spaces (echo in windows CMD is tricky)
             shell(`
-                echo.>newline& (${wait} & echo a & ${wait} & echo& ${wait} & type newline) | aio app init --no-login  -i ..\\..\\test\\console.json
+                echo.>newline& (${wait} & echo a & ${wait} & echo.& ${wait} & type newline) | aio app init --no-login  -i ..\\..\\test\\console.json
             `);
         } else {
             shell(`
