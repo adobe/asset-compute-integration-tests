@@ -36,3 +36,6 @@ notifications:
     template:
       - "3rd party developer integration tests %{result}\n\nBuild <%{build_url}|#%{build_number}> (<%{compare_url}|%{commit}>) of <https://github.com/adobe/asset-compute-integration-tests|adobe/asset-compute-integration-tests> took %{duration}"
 
+
+after_script:
+  - npx @adobe/sizewatcher
