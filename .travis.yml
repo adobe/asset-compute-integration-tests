@@ -38,4 +38,4 @@ notifications:
 
 
 after_script:
-  - npx @adobe/sizewatcher
+  - DEBUG=sizewatcher npx @adobe/sizewatcher
