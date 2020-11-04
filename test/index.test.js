@@ -27,7 +27,7 @@ function shell(cmd, dir) {
         .filter(line => !line.startsWith("#"))
         .join(os.platform() === "win32" ? " & " : "; ");
 
-    execSync(cmd, {cwd: dir, stdio: 'inherit'});
+    return execSync(cmd, {cwd: dir, stdio: 'inherit'});
 }
 
 // create dir (if doesn't exist yet) and change into it
