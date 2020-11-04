@@ -89,9 +89,11 @@ describe("integration tests", function() {
             console.log("SKIPPING aio app test on Travis Windows (docker linux containers required for worker tests)");
 
         } else {
-            shell(`
-                aio app test
+            const out = shell(`
+            aio app test
             `);
+            assert.ok(out && out.includes("- corrupt-input"));
+            assert.ok(out && out.includes("✔ Succeeded (expected error)"));
 
             // test as aio plugin
             shell(`
