@@ -27,7 +27,7 @@ function shell(cmd, dir) {
         .filter(line => !line.startsWith("#"))
         .join(os.platform() === "win32" ? " & " : "; ");
 
-    return execSync(cmd, {cwd: dir, stdio: 'inherit'});
+    execSync(cmd, {cwd: dir, stdio: 'inherit'});
 }
 
 // create dir (if doesn't exist yet) and change into it
@@ -97,7 +97,7 @@ describe("integration tests", function() {
             assert.ok(fs.existsSync(testLogsFile));
             const testLogs = fs.readFileSync(testLogsFile);
             assert.ok(testLogs.includes('Validation successful'));
-            
+
             // test as aio plugin
             shell(`
                 aio plugins:install @adobe/aio-cli-plugin-asset-compute
