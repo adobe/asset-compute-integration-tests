@@ -90,14 +90,14 @@ describe("integration tests", function() {
 
         } else {
             const testLogsFile = path.join("build", "test-results", "test-worker", "test.log");
-            assert(!fs.existsSync(testLogsFile));
+            assert.ok(!fs.existsSync(testLogsFile));
             shell(`
             aio app test
             `);
-            assert(fs.existsSync(testLogsFile));
-            // assert.ok(out && out.includes("- corrupt-input"));
-            // assert.ok(out && out.includes("✔ Succeeded (expected error)"));
-
+            assert.ok(fs.existsSync(testLogsFile));
+            const testLogs = fs.readFileSync(testLogsFile);
+            assert.ok(testLogs.includes('Validation successful'));
+            
             // test as aio plugin
             shell(`
                 aio plugins:install @adobe/aio-cli-plugin-asset-compute
