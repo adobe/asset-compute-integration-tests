@@ -92,7 +92,7 @@ describe("integration tests", function() {
             const testLogsFile = path.join("build", "test-results", "test-worker", "test.log");
             assert.ok(!fs.existsSync(testLogsFile));
             shell(`
-            aio app test
+               aio app test
             `);
             assert.ok(fs.existsSync(testLogsFile));
             const testLogs = fs.readFileSync(testLogsFile);
