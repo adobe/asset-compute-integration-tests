@@ -89,9 +89,14 @@ describe("integration tests", function() {
             console.log("SKIPPING aio app test on Travis Windows (docker linux containers required for worker tests)");
 
         } else {
+            const testLogsFile = path.join("build", "test-results", "test-worker", "test.log");
+            assert.ok(!fs.existsSync(testLogsFile));
             shell(`
                 aio app test
             `);
+            assert.ok(fs.existsSync(testLogsFile));
+            const testLogs = fs.readFileSync(testLogsFile);
+            assert.ok(testLogs.includes('Validation successful'));
 
             // test as aio plugin
             shell(`
