@@ -65,6 +65,7 @@ describe("integration tests", function() {
         shell(`
             npm install -g @adobe/aio-cli
             aio update --no-confirm
+            aio info
         `);
 
         cd("project");
