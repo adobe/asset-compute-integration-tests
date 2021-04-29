@@ -18,6 +18,8 @@ const fs = require("fs");
 const os = require("os");
 const path = require("path");
 const rimraf = require("rimraf");
+const debugConfig = require('debug');
+debugConfig.enable("aio-asset-compute:*");
 
 function shell(cmd, dir) {
     cmd = cmd
