@@ -18,6 +18,7 @@ const fs = require("fs");
 const os = require("os");
 const path = require("path");
 const rimraf = require("rimraf");
+process.env.DEBUG = "aio-asset-compute*";
 
 function shell(cmd, dir) {
     cmd = cmd
@@ -64,6 +65,7 @@ describe("integration tests", function() {
         shell(`
             npm install -g @adobe/aio-cli
             aio update --no-confirm
+            aio info
         `);
 
         cd("project");
