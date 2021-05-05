@@ -18,7 +18,7 @@ const fs = require("fs");
 const os = require("os");
 const path = require("path");
 const rimraf = require("rimraf");
-process.env.DEBUG = "aio-asset-compute*"
+process.env.DEBUG = "aio-asset-compute*";
 
 function shell(cmd, dir) {
     cmd = cmd
