@@ -24,3 +24,22 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
     - run: npm test
+    - name: Notify slack success
+      if: success()
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.ASSET_COMPUTE_IT_SLACK_BOT_TOKEN }}
+      uses: voxmedia/github-action-slack-notify-build@v1
+      with:
+        channel: app-alerts
+        status: SUCCESS
+        color: good
+
+    - name: Notify slack fail
+      if: failure()
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.ASSET_COMPUTE_IT_SLACK_BOT_TOKEN }}
+      uses: voxmedia/github-action-slack-notify-build@v1
+      with:
+        channel: app-alerts
+        status: FAILED
+        color: danger
