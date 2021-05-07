@@ -24,8 +24,13 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
     - run: npm test
+  
+  notify-slack-success:
+    runs-on: ubuntu-latest
+    if: success()
+    steps:
+    - uses: actions/checkout@v2
     - name: Notify slack success
-      if: success()
       env:
         SLACK_BOT_TOKEN: ${{ secrets.ASSET_COMPUTE_IT_SLACK_BOT_TOKEN }}
       uses: voxmedia/github-action-slack-notify-build@v1
@@ -33,13 +38,16 @@ jobs:
         channel_id: GAMJLHSBH
         status: SUCCESS
         color: good
-
-    - name: Notify slack fail
-      if: failure()
+  notify-slack-failure:
+    runs-on: ubuntu-latest
+    if: failure()
+    steps:
+    - uses: actions/checkout@v2
+    - name: Notify slack success
       env:
         SLACK_BOT_TOKEN: ${{ secrets.ASSET_COMPUTE_IT_SLACK_BOT_TOKEN }}
       uses: voxmedia/github-action-slack-notify-build@v1
       with:
         channel_id: GAMJLHSBH
-        status: FAILED
-        color: danger
+        status: SUCCESS
+        color: good
