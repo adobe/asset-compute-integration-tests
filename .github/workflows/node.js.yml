@@ -27,12 +27,12 @@ jobs:
     - run: npm ci
     - run: npm test
 
-  slack-notify:
-
+  slack-notify-success:
+    needs: [build]
     runs-on: ubuntu-latest
+    if: success()
     steps:
     - name: Notify slack success
-      if: success()
       env:
         SLACK_BOT_TOKEN: ${{ secrets.ASSET_COMPUTE_IT_SLACK_BOT_TOKEN }}
       uses: voxmedia/github-action-slack-notify-build@v1
@@ -40,8 +40,13 @@ jobs:
         channel_id: GAMJLHSBH
         status: SUCCESS
         color: good
+        
+  slack-notify-failure:
+    needs: [build]
+    runs-on: ubuntu-latest
+    if: failure()
+    steps:
     - name: Notify slack fail
-      if: failure()
       env:
         SLACK_BOT_TOKEN: ${{ secrets.ASSET_COMPUTE_IT_SLACK_BOT_TOKEN }}
       uses: voxmedia/github-action-slack-notify-build@v1
