@@ -5,6 +5,8 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  schedule:
+    - cron:  '0 1 * * *'
 
 jobs:
   build:
@@ -24,3 +26,31 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
     - run: npm test
+
+  slack-notify-success:
+    needs: [build]
+    runs-on: ubuntu-latest
+    if: success()
+    steps:
+    - name: Notify slack success
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.ASSET_COMPUTE_IT_SLACK_BOT_TOKEN }}
+      uses: voxmedia/github-action-slack-notify-build@v1
+      with:
+        channel_id: GAMJLHSBH
+        status: SUCCESS
+        color: good
+        
+  slack-notify-failure:
+    needs: [build]
+    runs-on: ubuntu-latest
+    if: failure()
+    steps:
+    - name: Notify slack fail
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.ASSET_COMPUTE_IT_SLACK_BOT_TOKEN }}
+      uses: voxmedia/github-action-slack-notify-build@v1
+      with:
+        channel_id: GAMJLHSBH
+        status: FAILED
+        color: danger
