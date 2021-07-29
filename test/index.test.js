@@ -81,10 +81,10 @@ describe("integration tests", function() {
             `);
         } else {
             shell(`
-                (sleep 2; echo "a "; sleep 2; echo; sleep 2; echo) | aio app init --no-login -i ../../test/console.json
+                (sleep 2; echo "a "; sleep 2; echo; sleep 2; echo; echo; sleep 3;) | aio app init --no-login -i ../../test/console.json
             `);
         }
-
+        shell('ls');
         assert(fs.existsSync(path.join("actions", "worker", "index.js")));
 
         if (process.env.TRAVIS && os.platform() === "win32") {
