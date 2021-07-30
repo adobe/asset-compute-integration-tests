@@ -63,7 +63,7 @@ describe("integration tests", function() {
 
     it("should install tools and run developer experience", async function() {
         shell(`
-            npm install -g @adobe/aio-cli
+            npm install -g @adobe/aio-cli@7.1.0
             aio update --no-confirm
             aio info
         `);
