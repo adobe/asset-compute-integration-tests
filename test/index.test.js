@@ -80,12 +80,15 @@ describe("integration tests", function() {
                 echo.>newline& (${wait} & echo a & ${wait} & type newline& ${wait} & type newline) | aio app init --no-login  -i ..\\..\\test\\console.json
             `);
         } else {
+            // shell(`
+            //     (sleep 2; echo "a "; sleep 2; echo; sleep 2; echo; echo; sleep 3;) | aio app init --no-login -i ../../test/console.json
+            // `);
             shell(`
-                (sleep 2; echo "a "; sleep 2; echo; sleep 2; echo; echo; sleep 3;) | aio app init --no-login -i ../../test/console.json
+                (sleep 2; echo " i"; sleep 2; echo;) | aio app init --no-login -i ../../test/console.json
             `);
         }
         shell('ls');
-        assert(fs.existsSync(path.join("actions", "worker", "index.js")));
+        assert(fs.existsSync(path.join("src", "dx-asset-compute-worker-1", "actions", "worker", "index.js")));
 
         if (process.env.TRAVIS && os.platform() === "win32") {
             console.log("SKIPPING aio app test on Travis Windows (docker linux containers required for worker tests)");
