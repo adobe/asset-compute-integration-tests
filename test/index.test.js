@@ -61,12 +61,58 @@ describe("integration tests", function() {
         cd(BUILD_DIR);
     });
 
-    it("should install tools and run developer experience", async function() {
+    it("should install lastest version of tools and run developer experience", async function() {
         shell(`
             npm install -g @adobe/aio-cli
             aio update --no-confirm
             aio info
         `);
+
+        cd("project");
+
+        // HACK: since `aio app init` has no way to programmatically select from the different questions,
+        //       we have to simulate user input using echo and piping to stdin, which is different between windows & *nix
+        if (os.platform() === "win32") {
+            // const timeout = "%SystemRoot%\\System32\\timeout.exe";
+            const wait = "ping -n 5 127.0.0.1 >NUL";
+            // this line must be exactly like this, including spaces or missing spaces (echo in windows CMD is tricky)
+            shell(`
+                echo.>newline& (${wait} & echo a & ${wait} & type newline& ${wait} & type newline) | aio app init --no-login  -i ..\\..\\test\\console.json
+            `);
+        } else {
+            shell(`
+                (sleep 2; echo " i"; sleep 2; echo;) | aio app init --no-login -i ../../test/console.json
+            `);
+        }
+        shell('ls');
+        assert(fs.existsSync(path.join("src", "dx-asset-compute-worker-1", "actions", "worker", "index.js")));
+
+        if (process.env.TRAVIS && os.platform() === "win32") {
+            console.log("SKIPPING aio app test on Travis Windows (docker linux containers required for worker tests)");
+
+        } else {
+            const testLogsFile = path.join("build", "test-results", "test-worker", "test.log");
+            assert.ok(!fs.existsSync(testLogsFile));
+            shell(`
+                aio app test
+            `);
+            assert.ok(fs.existsSync(testLogsFile));
+            const testLogs = fs.readFileSync(testLogsFile);
+            assert.ok(testLogs.includes('Validation successful'));
+
+            // test as aio plugin
+            shell(`
+                aio plugins:install @adobe/aio-cli-plugin-asset-compute
+                aio asset-compute test-worker
+            `);
+        }
+    }).timeout(600000);
+    it("should install version 7.1.0 of aio-cli and run developer experience", async function() {
+        shell(`
+        npm install -g @adobe/aio-cli@7.1.0
+        aio update --no-confirm
+        aio info
+    `);
 
         cd("project");
 
