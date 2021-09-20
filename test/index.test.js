@@ -69,7 +69,7 @@ describe("integration tests", function() {
 
         cd("project");
 
-        shell(`aio app:init --no-login -i ../../test/console.json -e dx/asset-compute/worker/1`)
+        shell(`aio app:init --no-login -i ../../test/console.json -e dx/asset-compute/worker/1`);
         shell('ls');
         assert(fs.existsSync(path.join("src", "dx-asset-compute-worker-1", "actions", "worker", "index.js")));
 
