@@ -64,26 +64,12 @@ describe("integration tests", function() {
     it("should install lastest version of tools and run developer experience", async function() {
         shell(`
             npm install -g @adobe/aio-cli
-            aio update --no-confirm
             aio info
         `);
 
         cd("project");
 
-        // HACK: since `aio app init` has no way to programmatically select from the different questions,
-        //       we have to simulate user input using echo and piping to stdin, which is different between windows & *nix
-        if (os.platform() === "win32") {
-            // const timeout = "%SystemRoot%\\System32\\timeout.exe";
-            const wait = "ping -n 5 127.0.0.1 >NUL";
-            // this line must be exactly like this, including spaces or missing spaces (echo in windows CMD is tricky)
-            shell(`
-                echo.>newline& (${wait} & echo a & ${wait} & type newline& ${wait} & type newline) | aio app init --no-login  -i ..\\..\\test\\console.json
-            `);
-        } else {
-            shell(`
-                (sleep 2; echo " i"; sleep 2; echo;) | aio app init --no-login -i ../../test/console.json
-            `);
-        }
+        shell(`aio app:init --no-login -i ../../test/console.json -e dx/asset-compute/worker/1`);
         shell('ls');
         assert(fs.existsSync(path.join("src", "dx-asset-compute-worker-1", "actions", "worker", "index.js")));
 
@@ -105,7 +91,6 @@ describe("integration tests", function() {
     it("should install version 7.1.0 of aio-cli and run developer experience", async function() {
         shell(`
         npm install -g @adobe/aio-cli@7.1.0
-        aio update --no-confirm
         aio info
     `);
 
