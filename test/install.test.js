@@ -39,13 +39,9 @@ it("should install (local) version of aio-cli and run developer experience", asy
 
     assert(fs.existsSync("project/src/dx-asset-compute-worker-1/actions/worker/index.js"));
 
-    if (process.env.TRAVIS && os.platform() === "win32") {
-        console.log("SKIPPING on Travis Windows (docker linux containers required for worker tests)");
-    } else {
-        // this could be where tests are run ...
-        shell(`npx aio app:info`, 'project');
+    // this could be where tests are run ...
+    shell(`npx aio app:info`, 'project');
 
-        // clean up
-        shell(`rm -rf project`);
-    }
+    // clean up
+    shell(`rm -rf project`);
 }).timeout(600000);
