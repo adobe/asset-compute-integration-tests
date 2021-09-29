@@ -42,6 +42,8 @@ it("should install (next) version of aio-cli and run developer experience", asyn
 
     // this could be where tests are run ...
     shell(`npx aio-next app:info`, 'project');
+    shell(`npx aio-next plugins:install @adobe/aio-cli-plugin-asset-compute`);
+    shell(`npx aio-next asset-compute:test-worker`, 'project');
 
     // clean up
     shell(`rm -rf project`);
