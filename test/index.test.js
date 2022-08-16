@@ -61,12 +61,38 @@ describe("integration tests", function() {
         cd(BUILD_DIR);
     });
 
-    it("should install tools and run developer experience", async function() {
+    it("should install lastest version of tools and run developer experience", async function() {
         shell(`
             npm install -g @adobe/aio-cli
-            aio update --no-confirm
             aio info
         `);
+
+        cd("project");
+
+        shell(`aio app:init --no-login -i ../../test/console.json -e dx/asset-compute/worker/1`);
+        shell('ls');
+        assert(fs.existsSync(path.join("src", "dx-asset-compute-worker-1", "actions", "worker", "index.js")));
+
+        const testLogsFile = path.join("build", "test-results", "test-worker", "test.log");
+        assert.ok(!fs.existsSync(testLogsFile));
+        shell(`
+            aio app test
+        `);
+        assert.ok(fs.existsSync(testLogsFile));
+        const testLogs = fs.readFileSync(testLogsFile);
+        assert.ok(testLogs.includes('Validation successful'));
+
+        // test as aio plugin
+        shell(`
+            aio plugins:install @adobe/aio-cli-plugin-asset-compute
+            aio asset-compute test-worker
+        `);
+    }).timeout(600000);
+    it("should install version 7.1.0 of aio-cli and run developer experience", async function() {
+        shell(`
+        npm install -g @adobe/aio-cli@7.1.0
+        aio info
+    `);
 
         cd("project");
 
@@ -87,24 +113,19 @@ describe("integration tests", function() {
 
         assert(fs.existsSync(path.join("actions", "worker", "index.js")));
 
-        if (process.env.TRAVIS && os.platform() === "win32") {
-            console.log("SKIPPING aio app test on Travis Windows (docker linux containers required for worker tests)");
+        const testLogsFile = path.join("build", "test-results", "test-worker", "test.log");
+        assert.ok(!fs.existsSync(testLogsFile));
+        shell(`
+            aio app test
+        `);
+        assert.ok(fs.existsSync(testLogsFile));
+        const testLogs = fs.readFileSync(testLogsFile);
+        assert.ok(testLogs.includes('Validation successful'));
 
-        } else {
-            const testLogsFile = path.join("build", "test-results", "test-worker", "test.log");
-            assert.ok(!fs.existsSync(testLogsFile));
-            shell(`
-                aio app test
-            `);
-            assert.ok(fs.existsSync(testLogsFile));
-            const testLogs = fs.readFileSync(testLogsFile);
-            assert.ok(testLogs.includes('Validation successful'));
-
-            // test as aio plugin
-            shell(`
-                aio plugins:install @adobe/aio-cli-plugin-asset-compute
-                aio asset-compute test-worker
-            `);
-        }
+        // test as aio plugin
+        shell(`
+            aio plugins:install @adobe/aio-cli-plugin-asset-compute
+            aio asset-compute test-worker
+        `);
     }).timeout(600000);
 });
