@@ -30,7 +30,7 @@ jobs:
   slack-notify-success:
     needs: [build]
     runs-on: ubuntu-latest
-    if: success()
+    if: success() && github.ref == 'refs/heads/main'
     steps:
     - name: Notify slack success
       env:
@@ -44,7 +44,7 @@ jobs:
   slack-notify-failure:
     needs: [build]
     runs-on: ubuntu-latest
-    if: failure()
+    if: failure() && github.ref == 'refs/heads/main'
     steps:
     - name: Notify slack fail
       env:
