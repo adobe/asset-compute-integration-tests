@@ -111,7 +111,7 @@ describe("integration tests", function() {
 
         // test as aio plugin
         shell(`
-            aio plugins:install @adobe/aio-cli-plugin-asset-compute
+            aio plugins:install @adobe/aio-cli-plugin-asset-compute2.0.1
             aio asset-compute test-worker
         `);
     }).timeout(600000);
@@ -152,7 +152,7 @@ describe("integration tests", function() {
 
         // test as aio plugin
         shell(`
-            aio plugins:install @adobe/aio-cli-plugin-asset-compute
+            aio plugins:install @adobe/aio-cli-plugin-asset-compute@2.0.1
             aio asset-compute test-worker
         `);
     }).timeout(600000);
