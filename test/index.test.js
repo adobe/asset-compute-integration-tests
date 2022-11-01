@@ -88,7 +88,7 @@ describe("integration tests", function() {
             aio asset-compute test-worker
         `);
     }).timeout(600000);
-    it.only("should install version 8.3.0 of aio-cli and run developer experience", async function() {
+    it("should install version 8.3.0 of aio-cli and run developer experience", async function() {
         shell(`
             npm install -g @adobe/aio-cli@8.3.0
             aio info
@@ -148,6 +148,7 @@ describe("integration tests", function() {
         const testLogsFile = path.join("build", "test-results", "test-worker", "test.log");
         assert.ok(!fs.existsSync(testLogsFile));
         shell(`
+            npm install -g @adobe/aio-cli-plugin-asset-compute@2.0.3
             aio info
             aio app test
         `);
