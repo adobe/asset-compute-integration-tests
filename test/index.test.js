@@ -103,9 +103,8 @@ describe("integration tests", function() {
         const testLogsFile = path.join("build", "test-results", "test-worker", "test.log");
         assert.ok(!fs.existsSync(testLogsFile));
         // bug where v8.3.0 will install newer version of cli plugin asset compute
-        console.log('Installing @adobe/aio-cli-plugin-asset-compute@2.0.1 locally in the project');
+        // console.log('Installing @adobe/aio-cli-plugin-asset-compute@2.0.3 locally in the project');
         shell(`
-            npm install -g @adobe/aio-cli-plugin-asset-compute@2.0.3
             aio info
             aio app test
         `);
