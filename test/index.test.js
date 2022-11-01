@@ -110,8 +110,8 @@ describe("integration tests", function() {
             aio app test
         `);
         assert.ok(fs.existsSync(testLogsFile));
-        // const testLogs = fs.readFileSync(testLogsFile);
-        // assert.ok(testLogs.includes('Validation successful'));
+        const testLogs = fs.readFileSync(testLogsFile);
+        assert.ok(testLogs.includes('Validation successful'));
 
         // test as aio plugin
         shell(`
