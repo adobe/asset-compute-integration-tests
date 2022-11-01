@@ -120,7 +120,7 @@ describe("integration tests", function() {
         `);
     }).timeout(600000);
 
-    it("should install version 7.1.0 of aio-cli and run developer experience", async function() {
+    it.skip("should install version 7.1.0 of aio-cli and run developer experience", async function() {
         shell(`
         npm install -g @adobe/aio-cli@7.1.0
         aio info
