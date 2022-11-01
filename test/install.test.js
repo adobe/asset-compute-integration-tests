@@ -28,7 +28,7 @@ function shell(cmd, dir) {
     execSync(cmd, {cwd: dir, stdio: 'inherit'});
 }
 
-it("should install (local) version of aio-cli and run developer experience", async function() {
+it.skip("should install (local) version of aio-cli and run developer experience", async function() {
     shell(`
         npm install --no-save @adobe/aio-cli
         npx aio info
