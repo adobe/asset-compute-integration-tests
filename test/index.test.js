@@ -63,13 +63,13 @@ describe("integration tests", function() {
 
     it("should install lastest version of tools and run developer experience", async function() {
         shell(`
-            npm install -g @adobe/aio-cli
+            npm install -g @adobe/aio-cli@9.4.1
             aio info
         `);
 
         cd("project");
 
-        shell(`aio app:init --no-login -i ../../test/console.json -e dx/asset-compute/worker/1`);
+        shell(`aio app:init --no-login -i ../../test/console.json -t @adobe/generator-app-asset-compute@1.0.2`);
         shell('ls');
         assert(fs.existsSync(path.join("src", "dx-asset-compute-worker-1", "actions", "worker", "index.js")));
 
@@ -96,7 +96,7 @@ describe("integration tests", function() {
 
         cd("project");
 
-        shell(`aio app:init --no-login -i ../../test/console.json -e dx/asset-compute/worker/1`);
+        shell(`aio app:init --no-login -i ../../test/console.json -t @adobe/generator-app-asset-compute@1.0.2`);
         shell('ls');
         assert(fs.existsSync(path.join("src", "dx-asset-compute-worker-1", "actions", "worker", "index.js")));
 

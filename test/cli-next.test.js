@@ -32,7 +32,8 @@ function shell(cmd, dir) {
 it.skip("should install (next) version of aio-cli and run developer experience", async function() {
 
     shell(`
-        npm install --no-save adobe/aio-cli#branch-prerelease
+        npm install --no-save @adobe/aio-cli-next
+        npx aio-next telemetry off
         npx aio-next info
         mkdir project
         cd project
