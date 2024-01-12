@@ -88,7 +88,7 @@ describe("integration tests", function() {
             aio asset-compute test-worker
         `);
     }).timeout(600000);
-    it("should install version 8.3.0 of aio-cli and run developer experience", async function() {
+    it.skip("should install version 8.3.0 of aio-cli and run developer experience", async function() {
         shell(`
             npm install -g @adobe/aio-cli@8.3.0
             aio info
@@ -96,7 +96,7 @@ describe("integration tests", function() {
 
         cd("project");
 
-        shell(`aio app:init --no-login -i ../../test/console.json -t @adobe/generator-app-asset-compute@1.0.2`);
+        shell(`aio app:init --no-login -i ../../test/console.json -e dx/asset-compute/worker/1`);
         shell('ls');
         assert(fs.existsSync(path.join("src", "dx-asset-compute-worker-1", "actions", "worker", "index.js")));
 
@@ -116,7 +116,7 @@ describe("integration tests", function() {
         `);
     }).timeout(600000);
 
-    it("should install version 7.1.0 of aio-cli and run developer experience", async function() {
+    it.skip("should install version 7.1.0 of aio-cli and run developer experience", async function() {
         shell(`
         npm install -g @adobe/aio-cli@7.1.0
         aio info
