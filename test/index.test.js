@@ -61,7 +61,7 @@ describe("integration tests", function() {
         cd(BUILD_DIR);
     });
 
-    it("should install lastest version of tools and run developer experience", async function() {
+    it("should install 9.4.1 version of tools and run developer experience", async function() {
         shell(`
             npm install -g @adobe/aio-cli@9.4.1
             aio info
