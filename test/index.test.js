@@ -49,10 +49,10 @@ describe("integration tests", function() {
         // make npm global installations go into a specific directory
         // to avoid messing with a user's actual global npm installations
         // Note: npm_config_prefix must be lowercase!
-        process.env.npm_config_prefix = path.resolve(BUILD_DIR, "npm");
+        const npmPrefix = path.resolve(BUILD_DIR, "npm");
+        process.env.npm_config_prefix = npmPrefix;
 
-        // npm bin path is different on windows, ask npm for the exact path
-        const npmBinPath = execSync("npm bin -g").toString().trim();
+        const npmBinPath = `${npmPrefix}${path.sep}bin`;
         process.env.PATH = `${npmBinPath}${path.delimiter}${process.env.PATH}`;
 
         // reset/clear build dir entirely before each run
