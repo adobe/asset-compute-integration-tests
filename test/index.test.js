@@ -88,4 +88,32 @@ describe("integration tests", function() {
             aio asset-compute test-worker
         `);
     }).timeout(600000);
+
+    it("should install latest version of tools and run developer experience", async function() {
+        shell(`
+            npm install -g @adobe/aio-cli@latest
+            aio info
+        `);
+
+        cd("project");
+
+        shell(`aio app:init --no-login -i ../../test/console.json -t @adobe/generator-app-asset-compute@1.0.2`);
+        shell('ls');
+        assert(fs.existsSync(path.join("src", "dx-asset-compute-worker-1", "actions", "worker", "index.js")));
+
+        const testLogsFile = path.join("build", "test-results", "test-worker", "test.log");
+        assert.ok(!fs.existsSync(testLogsFile));
+        shell(`
+            aio app test
+        `);
+        assert.ok(fs.existsSync(testLogsFile));
+        const testLogs = fs.readFileSync(testLogsFile);
+        assert.ok(testLogs.includes('Validation successful'));
+
+        // test as aio plugin
+        shell(`
+            aio plugins:install @adobe/aio-cli-plugin-asset-compute
+            aio asset-compute test-worker
+        `);
+    }).timeout(600000);
 });

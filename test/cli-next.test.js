@@ -29,7 +29,7 @@ function shell(cmd, dir) {
 }
 
 // skip for now until the new way of testing the next aio-cli version is ready
-it.skip("should install (next) version of aio-cli and run developer experience", async function() {
+it("should install (next) version of aio-cli and run developer experience", async function() {
 
     shell(`
         npm install --no-save @adobe/aio-cli-next
